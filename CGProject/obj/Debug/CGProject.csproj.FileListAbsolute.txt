@@ -59,3 +59,6 @@ C:\Users\PRASHANTH KUMAR\source\repos\BMSITNEW\CGProject\CGProject\bin\Microsoft
 C:\Users\PRASHANTH KUMAR\source\repos\BMSITNEW\CGProject\CGProject\obj\Debug\CGProject.csproj.CopyComplete
 C:\Users\PRASHANTH KUMAR\source\repos\BMSITNEW\CGProject\CGProject\obj\Debug\CGProject.dll
 C:\Users\PRASHANTH KUMAR\source\repos\BMSITNEW\CGProject\CGProject\obj\Debug\CGProject.pdb
+D:\Repository\GitHub\CG-Registration-Portal\CGProject\obj\Debug\CGProject.csprojAssemblyReference.cache
+D:\Repository\GitHub\CG-Registration-Portal\CGProject\obj\Debug\CGProject.dll
+D:\Repository\GitHub\CG-Registration-Portal\CGProject\obj\Debug\CGProject.pdb

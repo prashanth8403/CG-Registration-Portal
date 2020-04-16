@@ -150,7 +150,7 @@ namespace CGProject
                             Session["HeiurOscarMike"] = Convert.ToString(MailFunction1(StudentUsn1.Text + "@bmsit.in", "Student"));
                         /*else
                         {
-                            RookErrorHandler("Opps!😕", "Registration allowed for only A and B section only.");
+                            RookErrorHandler("Opps!😕", "Registration allowed only for A and B section.");
                         }*/
                     }
                 }
@@ -158,7 +158,7 @@ namespace CGProject
 
             else if ((int)Session["WizardControl"] == 1)
             {
-                if (((string)Session["HeiurOscarMike"] == EmailOTP.Text) || (EmailOTP.Text == "227227"))
+                if (((string)Session["HeiurOscarMike"] == EmailOTP.Text))
                 {
                     BackButton.Visible = false;
                     UserSelection.Visible = true;
