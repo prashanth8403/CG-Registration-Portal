@@ -73,7 +73,7 @@ namespace Rook.Mailer
             {
                 _mail.From = new MailAddress("prashanth_kumar@gmx.com");
                 smtp.Host = "mail.gmx.com";
-                string u = "prashanth_kumar@gmx.com", v = "Hunter21#$";
+                string u = "<username>", v = "<password>";
                 smtp.Credentials = new System.Net.NetworkCredential(u, v);
                 smtp.EnableSsl = true;
                 smtp.Send(_mail);
@@ -103,7 +103,7 @@ namespace Rook.Mailer
             {
                 _mail.From = new MailAddress("bmsit@gmx.com");
                 smtp.Host = "mail.gmx.com";
-                string u = "bmsit@gmx.com", v = "Hunter21#";
+                string u = "<username>", v = "<password>";
                 smtp.Credentials = new System.Net.NetworkCredential(u, v);
                 smtp.EnableSsl = true;
                 smtp.Send(_mail);
