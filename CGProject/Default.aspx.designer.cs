@@ -24,6 +24,15 @@ namespace CGProject
         protected global::System.Web.UI.HtmlControls.HtmlForm Register;
 
         /// <summary>
+        /// Infobtnn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Infobtnn;
+
+        /// <summary>
         /// UpdateScript control.
         /// </summary>
         /// <remarks>
@@ -69,13 +78,13 @@ namespace CGProject
         protected global::System.Web.UI.WebControls.Panel UserDetails;
 
         /// <summary>
-        /// UserNameValid control.
+        /// UsnValidator1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator UserNameValid;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator UsnValidator1;
 
         /// <summary>
         /// UsnRequired control.
@@ -123,13 +132,13 @@ namespace CGProject
         protected global::System.Web.UI.WebControls.TextBox StudentName1;
 
         /// <summary>
-        /// RegularExpressionValidator3 control.
+        /// UsnValidator2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator3;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator UsnValidator2;
 
         /// <summary>
         /// StudentUsn2 control.
@@ -157,6 +166,42 @@ namespace CGProject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox StudentName2;
+
+        /// <summary>
+        /// UsnValidator3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator UsnValidator3;
+
+        /// <summary>
+        /// StudentUsn3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox StudentUsn3;
+
+        /// <summary>
+        /// RegularExpressionValidator6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator6;
+
+        /// <summary>
+        /// StudentName3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox StudentName3;
 
         /// <summary>
         /// UserAuthentication control.

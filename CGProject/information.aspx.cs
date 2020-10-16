@@ -4,12 +4,11 @@ using System.Text;
 using System.Security.Cryptography;
 
 
-
 namespace CGProject
 {
     public partial class information : System.Web.UI.Page
     {
-        public MySqlConnection connect = new MySqlConnection("Server=[ADD SERVER ADDRESS]; DATABASE=[ADD DATABASE]; UID=[ADD CRED];PASSWORD=[ADD PASSWORD];");
+        public MySqlConnection connect = new MySqlConnection("Server=localhost; DATABASE=cgproject; UID=root;PASSWORD=silicon;");
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -49,7 +48,7 @@ namespace CGProject
                 {
                     GridPanel.Visible = true;
                     Reader.Close();
-                    string Query1 = "select prefix,title,suffix,student1,student2,usn1,usn2,section1,section2 from userdetails,projects where flag=1 and userdetails.ID = projects.ID ;";
+                    string Query1 = "select prefix,title,suffix,student1,student2,student3,section1,section2,section3 from userdetails,projects where flag=1 and userdetails.ID = projects.ID ;";
                     MySqlCommand SqlProcess1 = new MySqlCommand(Query1, connect);
                     printableTable.DataSource = SqlProcess1.ExecuteReader();
                     printableTable.DataBind();
@@ -77,7 +76,7 @@ namespace CGProject
                 {
                     MessagePanel.Visible = true;
                     MessageHeader.Text = "Unexpected Error";
-                    MessageLabel.Text = "Unexpected System error occured!";
+                    MessageLabel.Text = "Unexpected System error occured! | "+ex.Message;
                 }
             }
             finally
@@ -98,6 +97,7 @@ namespace CGProject
             MessagePanel.Visible = false;
             Response.Redirect("Home");
         }
+       
 
         protected void printsilicon_Click(object sender, EventArgs e)
         {

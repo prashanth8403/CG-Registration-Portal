@@ -4,145 +4,37 @@
 
 <html>
 <head runat="server">
-    <title>REGISTRATION - CG PROJECT</title>
-    <link rel="icon" href="Source/Resource/logo.png" />
+    <title>REGISTRATION - WEB PROJECT</title>
+
     <!-- Favicon -->
+    <link rel="icon" href="Source/Resource/logo.png" />
+
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Monoton|Roboto+Slab:400,700|Material+Icons" />
     <link href="Source/Styles/style.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="top-silicon" style="background-color: #fff; width: 100%; margin-top: -15px; box-shadow: 0px 1px 21px -7px rgba(0,0,0,1);">
-        <nav class="navbar navbar-transparent navbar-color-on-scroll navbar-expand-lg" style="background-color: #363491;">
-            <div class="container" style="background-color: #fff; padding-top: -15px;">
-                <div>
-                    <div style="float: left; padding-right: 10px;">
-                        <img src="Source/Resource/logo.png" height="60" />
-                    </div>
-                    <div style="float: right; padding-top: 10px;">
-                        <a style="font-family: Arial; font-size: 32px; color: #d30000; font-weight: 600">BMS</a><br />
-                        <a style="font-family: Calibri; color: #363491; font-size: 22px; font-weight: 600">INSTITUTE OF TECHNOLOGY</a>
-                    </div>
-                </div>
-                <div>
-                    <a href="Information" class="infobtn">Info.</a>
-                </div>
-            </div>
-        </nav>
-    </div>
-    <div>
-    </div>
-
-    <style>
-        .modal-load {
-            /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            padding-top: 100px; /* Location of the box */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(225,225,225,0.6); /* Black w/ opacity */
-        }
-
-        .modal-content {
-            margin-top: 150px;
-            width: 400px;
-            max-width: 90%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-
-        .modal-load-content {
-            margin: auto;
-            background-image: url("Source/Resource/load5.gif");
-            padding: 0;
-            background-size: 50px;
-            width: 50px;
-            background-repeat: no-repeat;
-            height: 70px;
-            position: center;
-            margin-top: 30vh;
-            -webkit-animation-name: animatetop;
-            -webkit-animation-duration: 0.4s;
-            animation-name: animatetop;
-            animation-duration: 0.4s
-        }
-
-        @-webkit-keyframes animatetop {
-            from {
-                top: -300px;
-                opacity: 0
-            }
-
-            to {
-                top: 0;
-                opacity: 1
-            }
-        }
-
-        @keyframes animatetop {
-            from {
-                top: -300px;
-                opacity: 0
-            }
-
-            to {
-                top: 0;
-                opacity: 1
-            }
-        }
-
-        /* The Close Button */
-        .close {
-            color: white;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-            .close:hover,
-            .close:focus {
-                color: #000;
-                text-decoration: none;
-                cursor: pointer;
-            }
-
-        .modal-load-header {
-            padding: 2px 16px;
-            background-color: #5cb85c;
-            color: white;
-        }
-
-        .modal-load-body {
-            padding: 2px 16px;
-        }
-
-        .modal-load-footer {
-            padding: 2px 16px;
-            background-color: #5cb85c;
-            color: white;
-        }
-    </style>
     <div class="main-content">
         <form id="Register" runat="server">
+            <div class="top-silicon" style="background-color: #fff; width: 100%; margin-top: -15px; box-shadow: 0px 1px 21px -7px rgba(0,0,0,1);">
+                <nav class="navbar navbar-transparent navbar-color-on-scroll navbar-expand-lg" style="background-color: #363491;">
+                    <div class="container" style="background-color: #fff; padding-top: -15px;">
+                        <div>
+                            <div style="padding: 15px;">
+                                <a style="font-family: Monoton; color: #1163ad; font-size: 30px;">ROOK&nbsp;&nbsp;&nbsp;&nbsp;LABS</a>
+                            </div>
+                        </div>
+                        <div>
+                            <asp:Button ID="Infobtnn" CausesValidation="false" class="infobtn" runat="server" OnClick="ViewInfo" Text="Info." />
+                        </div>
+                    </div>
+                </nav>
+            </div>
             <asp:ScriptManager ID="UpdateScript" runat="server">
             </asp:ScriptManager>
             <asp:Panel ID="MainPanel" runat="server">
                 <asp:Panel ID="FortificationController" runat="server">
                     <div class="container-fluid">
-                        <div class="alert alert-info">
-                            <div class="container">
-                                <div class="alert-icon">
-                                    <i class="material-icons">info_outline</i>
-                                </div>
-                                You can find this portal's source code at: <a id="githubtag" href="#" style="font-weight: 600;">github.com/prashanth8403/WebProject/</a>
-                            </div>
-                        </div>
                         <div style="position: center; text-align: center; width: 100%;">
                         </div>
                         <div id="MainRow" class="row">
@@ -155,10 +47,12 @@
                                         <asp:UpdatePanel ID="UserInterface" UpdateMode="Conditional" runat="server">
                                             <ContentTemplate>
                                                 <br />
+
+                                                <!-- Student1 -->
                                                 <asp:Panel ID="UserDetails" runat="server">
                                                     <div class="validation-container">
                                                         <asp:RegularExpressionValidator
-                                                            ID="UserNameValid"
+                                                            ID="UsnValidator1"
                                                             CssClass="validation-class-text" runat="server"
                                                             ErrorMessage="*Invalid USN"
                                                             ControlToValidate="StudentUsn1"
@@ -185,7 +79,6 @@
                                                             ValidationExpression="^[aA-zZ ]+$"
                                                             Display="Dynamic">
                                                         </asp:RegularExpressionValidator>
-
                                                         <asp:RequiredFieldValidator CssClass="validation-class-text" ControlToValidate="StudentName1" ID="RequiredFieldValidator1" runat="server" ErrorMessage="*Required Field">
                                                         </asp:RequiredFieldValidator>
                                                     </div>
@@ -197,9 +90,10 @@
                                                         </div>
                                                         <asp:TextBox ID="StudentName1" class="form-control" placeholder="First Student Name..." data-toggle="tooltip" data-placement="top" title="Phone Number" data-container="body" runat="server"></asp:TextBox>
                                                     </div>
+                                                    <!-- Student2 -->
                                                     <div class="validation-container">
                                                         <asp:RegularExpressionValidator
-                                                            ID="RegularExpressionValidator3"
+                                                            ID="UsnValidator2"
                                                             CssClass="validation-class-text" runat="server"
                                                             ErrorMessage="*Invalid USN"
                                                             ControlToValidate="StudentUsn2"
@@ -214,7 +108,7 @@
                                                                 <i class="material-icons">assignment</i>
                                                             </span>
                                                         </div>
-                                                        <asp:TextBox ID="StudentUsn2" class="form-control" placeholder="Second Student USN...(optional)" data-toggle="tooltip" data-placement="top" title="University Seat Number" data-container="body" runat="server"></asp:TextBox>
+                                                        <asp:TextBox ID="StudentUsn2" class="form-control" placeholder="Second Student USN..." data-toggle="tooltip" data-placement="top" title="University Seat Number" data-container="body" runat="server"></asp:TextBox>
                                                     </div>
                                                     <div class="validation-container">
                                                         <asp:RegularExpressionValidator
@@ -233,7 +127,46 @@
                                                                 <i class="material-icons">face</i>
                                                             </span>
                                                         </div>
-                                                        <asp:TextBox ID="StudentName2" class="form-control" placeholder="Second Student Name...(Optional)" data-toggle="tooltip" data-placement="top" title="Phone Number" data-container="body" runat="server"></asp:TextBox>
+                                                        <asp:TextBox ID="StudentName2" class="form-control" placeholder="Second Student Name..." data-toggle="tooltip" data-placement="top" title="Phone Number" data-container="body" runat="server"></asp:TextBox>
+                                                    </div>
+                                                    <!-- Student3 -->
+                                                    <div class="validation-container">
+                                                        <asp:RegularExpressionValidator
+                                                            ID="UsnValidator3"
+                                                            CssClass="validation-class-text" runat="server"
+                                                            ErrorMessage="*Invalid USN"
+                                                            ControlToValidate="StudentUsn3"
+                                                            ValidationExpression="^1+[bByY]{2}\d{2}[A-aZ-z]{2}[0-9]{3}$"
+                                                            Display="Dynamic">
+                                                        </asp:RegularExpressionValidator>
+                                                        <br />
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend" style="text-transform: uppercase">
+                                                            <span class="input-group-text">
+                                                                <i class="material-icons">assignment</i>
+                                                            </span>
+                                                        </div>
+                                                        <asp:TextBox ID="StudentUsn3" class="form-control" placeholder="third Student USN..." data-toggle="tooltip" data-placement="top" title="University Seat Number" data-container="body" runat="server"></asp:TextBox>
+                                                    </div>
+                                                    <div class="validation-container">
+                                                        <asp:RegularExpressionValidator
+                                                            ID="RegularExpressionValidator6"
+                                                            CssClass="validation-class-text" runat="server"
+                                                            ErrorMessage="**Invalid Name"
+                                                            ControlToValidate="StudentName3"
+                                                            ValidationExpression="^[aA-zZ ]+$"
+                                                            Display="Dynamic">
+                                                        </asp:RegularExpressionValidator>
+                                                        <br />
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                <i class="material-icons">face</i>
+                                                            </span>
+                                                        </div>
+                                                        <asp:TextBox ID="StudentName3" class="form-control" placeholder="third Student Name..." data-toggle="tooltip" data-placement="top" title="Phone Number" data-container="body" runat="server"></asp:TextBox>
                                                     </div>
                                                 </asp:Panel>
                                                 <asp:Panel ID="UserAuthentication" runat="server">
@@ -283,9 +216,11 @@
                                                             </div>
                                                             <asp:DropDownList class="form-control" ID="Prefix" runat="server">
                                                                 <asp:ListItem Text="Select Prefix(if any)..." Value="" />
-                                                                <asp:ListItem Text="Visualization of" Value="Visualization" />
-                                                                <asp:ListItem Text="Simulation of" Value="Simulation of" />
-                                                                <asp:ListItem Text="Virtual" Value="Virtual" />
+                                                                <asp:ListItem Text="Online" Value="Online" />
+                                                                <asp:ListItem Text="Digital" Value="Digital" />
+                                                                <asp:ListItem Text="Smart" Value="Smart" />
+                                                                <asp:ListItem Text="Secured" Value="Secured" />
+                                                                <asp:ListItem Text="Social" Value="Social" />
                                                             </asp:DropDownList>
                                                         </div>
                                                     </div>
@@ -327,16 +262,16 @@
                                                             </div>
                                                             <asp:DropDownList class="form-control" ID="Suffix" runat="server">
                                                                 <asp:ListItem Text="Select Suffix(if any)..." Value="" />
-                                                                <asp:ListItem Text="process" Value="process" />
-                                                                <asp:ListItem Text="system" Value="system" />
-                                                                <asp:ListItem Text="simulation" Value="simulation" />
-                                                                <asp:ListItem Text="game" Value="game" />
-                                                                <asp:ListItem Text="scheduling" Value="scheduling" />
-                                                                <asp:ListItem Text="visualization" Value="visualization" />
-                                                                <asp:ListItem Text="simulation" Value="simulation" />
-                                                                <asp:ListItem Text="algorithm" Value="algorithm" />
+                                                                <asp:ListItem Text="Portal" Value="Portal" />
+                                                                <asp:ListItem Text="System" Value="System" />
+                                                                <asp:ListItem Text="Analyzer" Value="System" />
+                                                                <asp:ListItem Text="Database" Value="Database" />
+                                                                <asp:ListItem Text="Game" Value="Game" />
+                                                                <asp:ListItem Text="WebSite" Value="WebSite" />
+                                                                <asp:ListItem Text="Reservation System/Portal" Value="Reservation System/Portal" />
+                                                                <asp:ListItem Text="Management System/Portal" Value="Management System/Portal" />
                                                             </asp:DropDownList>
-                                                            
+
                                                         </div>
                                                     </div>
                                                     <br />
@@ -398,13 +333,12 @@
                                                         </div>
                                                     </div>
                                                 </asp:Panel>
-                                                 <asp:Panel ID="ConfirmPanel" runat="server" >
+                                                <asp:Panel ID="ConfirmPanel" runat="server">
                                                     <div class="update-progress">
                                                         <div id="myModal12" class="modal-load">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" style="font-weight: 600; font-size: 20px;">
-                                                                        Confirm Title!!
+                                                                    <h5 class="modal-title" style="font-weight: 600; font-size: 20px;">Confirm Title!!
                                                                     </h5>
                                                                 </div>
                                                                 <div class="modal-body">
@@ -416,8 +350,8 @@
                                                                     </p>
                                                                 </div>
                                                                 <div style="position: center; margin-left: auto; margin-right: auto;">
-                                                                    <asp:Button CausesValidation="false" ID="ConfirmCancel" class="btn btn-default" runat="server" Text="Cancel" OnClick="_ConfirmCancel_Click"/>
-                                                                    <asp:Button CausesValidation="false" ID="ConfirmOK" class="btn btn-warning" runat="server" Text="Confirm" OnClick="_ConfirmOK_Click"/>
+                                                                    <asp:Button CausesValidation="false" ID="ConfirmCancel" class="btn btn-default" runat="server" Text="Cancel" OnClick="_ConfirmCancel_Click" />
+                                                                    <asp:Button CausesValidation="false" ID="ConfirmOK" class="btn btn-warning" runat="server" Text="Confirm" OnClick="_ConfirmOK_Click" />
                                                                 </div>
                                                                 <br />
                                                             </div>
@@ -466,7 +400,7 @@
                                         <!-- Final List -->
                                         <div class="card">
                                             <div class="table-container" style="max-height: 150px;">
-                                                <asp:GridView ID="GridWithHeld" CssClass="customers" runat="server" AutoGenerateColumns="false">
+                                                <asp:GridView ID="GridWithHeld" CssClass="customers" runat="server" AutoGenerateColumns="false" OnSelectedIndexChanged="GridWithHeld_SelectedIndexChanged">
                                                     <Columns>
                                                         <asp:BoundField DataField="ID" HeaderText="ID" />
                                                         <asp:BoundField DataField="usn" HeaderText="USN's" />
@@ -476,7 +410,7 @@
                                                             </ItemTemplate>
                                                         </asp:TemplateField>
                                                         <asp:BoundField DataField="Remark" HeaderText="Remarks" />
-                                                        <asp:ButtonField HeaderText="#" ControlStyle-ForeColor="#363491" ControlStyle-CssClass="info-view" Text="Delete" CommandName="Delete" />
+                                                        <asp:ButtonField HeaderText="#" ControlStyle-ForeColor="#363491" ControlStyle-CssClass="info-view" Text="Delete" CommandName="Select" />
                                                     </Columns>
                                                 </asp:GridView>
                                             </div>
@@ -494,7 +428,7 @@
     <div class="waves">
         <svg width="100%" height="200px" fill="none">
             <path
-                fill="#363491"
+                fill="#00abfa"
                 d="
           M0 67
           C 273,183
@@ -555,20 +489,15 @@
         </svg>
     </div>
     <div class="footer-new">
-        <a>
-            <p class="pull-left">
-                <small style="font-size: 14px;" class="block">&copy; 2020 BMSIT & M. All Rights Reserved..</small>
-                <small style="font-size: 14px;" class="block">
-                    <br />
-                    Powered by <a href="https://www.rooklabs.net" target="_blank" style="color: #00ffff">Rook Labs</a>, Bengaluru</small>
-            </p>
-        </a>
+        <p class="pull-left">
+            <a style="font-family: 'Monoton'; font-size: 30px; font-weight: 400; color: #fff;" href="https://www.rooklabs.net" target="_blank">ROOK&nbsp;&nbsp;LABS</a>
+            <br />
+            <a>ಬೆಂಗಳೂರು-64</a>
+        </p>
     </div>
     <script src="Source/Scripts/bootstrap-material-design.min.js"></script>
     <script src="Source/Scripts/jquery.min.js"></script>
     <script src="Source/Scripts/material-kit.min.js"></script>
-    <script src="Source/Scripts/popper.min.js"></script>
-
 </body>
 </html>
 

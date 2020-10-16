@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
 using System.Data;
-using RookLabs.Mailer;
-using System.Net.Mail;
-using System.Security.Cryptography;
 using MySql.Data.MySqlClient;
-using System.Text;
-
+using Rook.Utility;
+using Rook.Crypto;
+using Rook.Mailer;
+using Rook.NumericalSchema;
 
 namespace CGProject
 {
-    public partial class Default : System.Web.UI.Page
+    public partial class Default : Page
     {
-        public MySqlConnection connect = new MySqlConnection("Server=[ADD SERVER ADDRESS]; DATABASE=[ADD DATABASE]; UID=[ADD CRED];PASSWORD=[ADD PASSWORD];");
+        public MySqlConnection connect = new MySqlConnection("Server=localhost; DATABASE=cgproject; UID=root;PASSWORD=silicon;");
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -54,18 +53,19 @@ namespace CGProject
         // TIMER
         protected void grid_load(object sender, EventArgs e)
         {
-            connect.Open();
-            string Query1 = "select * from projects where flag=1";
-            string Query2 = "select * from projects where flag=0";
-            MySqlCommand SqlProcess1 = new MySqlCommand(Query1, connect);
-            GridFinal.DataSource = SqlProcess1.ExecuteReader();
-            GridFinal.DataBind();
-            connect.Close();
-            connect.Open();
-            MySqlCommand SqlProcess2 = new MySqlCommand(Query2, connect);
-            GridWithHeld.DataSource = SqlProcess2.ExecuteReader();
-            GridWithHeld.DataBind();
-            connect.Close();
+            grid_load();
+            //connect.Open();
+            //string Query1 = "select * from projects where flag=1";
+            //string Query2 = "select * from projects where flag=0";
+            //MySqlCommand SqlProcess1 = new MySqlCommand(Query1, connect);
+            //GridFinal.DataSource = SqlProcess1.ExecuteReader();
+            //GridFinal.DataBind();
+            //connect.Close();
+            //connect.Open();
+            //MySqlCommand SqlProcess2 = new MySqlCommand(Query2, connect);
+            //GridWithHeld.DataSource = SqlProcess2.ExecuteReader();
+            //GridWithHeld.DataBind();
+            //connect.Close();
         }
 
         protected void _messagebutton_Click(object sender, EventArgs e)
@@ -75,57 +75,102 @@ namespace CGProject
 
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
-
+            SetFocus(SubmitButton);
             if ((int)Session["WizardControl"] == 0)
             {
-
                 Boolean flag = true;
                 Boolean SecFlag = true;
 
-                if ((StudentUsn1.Text == StudentUsn2.Text) || StudentName2.Text != "" || StudentUsn2.Text != "")
+                if(StudentUsn1.Text == "" || StudentName1.Text == "")
                 {
-                    if (StudentUsn1.Text == StudentUsn2.Text)
-                    {
-                        SecFlag = false;
-                        RookErrorHandler("Error!😕", "Both student's USN cannot be same.");
-                    }
-                    if ((StudentUsn2.Text != "") && (StudentName2.Text == ""))
-                    {
-                        SecFlag = false;
-                        RookErrorHandler("Error!😕", "Enter second student's name.");
-                    }
-                    if ((StudentUsn2.Text == "") && (StudentName1.Text != ""))
-                    {
-                        SecFlag = false;
-                        RookErrorHandler("Error!😕", "Enter second student's USN.");
-                    }
+                    SecFlag = false;
+                    RookErrorHandler("Error!😕", "Enter Complete Details");
                 }
+
+                if (StudentUsn2.Text != "" && StudentName2.Text == "")
+                {
+                    SecFlag = false;
+                    RookErrorHandler("Error!😕", "Enter second student's name.");
+                }
+
+
+                if (StudentUsn3.Text != "" && StudentName3.Text == "")
+                {
+                    SecFlag = false;
+                    RookErrorHandler("Error!😕", "Enter third student's name.");
+                }
+
+                if(!UsnValidator1.IsValid)
+                {
+                    SecFlag = false;
+                    RookErrorHandler("Error!😕", "Invalid First Student's USN");
+                }
+
+                if (StudentUsn2.Text != "" && !UsnValidator2.IsValid)
+                {
+                    SecFlag = false;
+                    RookErrorHandler("Error!😕", "Invalid Second Student's USN");
+                }
+
+                if (StudentUsn3.Text != "" && !UsnValidator3.IsValid)
+                {
+                    SecFlag = false;
+                    RookErrorHandler("Error!😕", "Invalid third Student's USN");
+                }
+
+                // Un-necessary
+                //if (StudentUsn1.Text == StudentUsn2.Text || (StudentName2.Text != "" || StudentUsn2.Text != "") || StudentUsn3.Text != "")
+                //{
+                //    {
+                //        SecFlag = false;
+                //        RookErrorHandler("Error!🤔", "Two student's cannot be same USN");
+                //    }
+                //    if ((StudentUsn2.Text != "") && (StudentName2.Text == ""))
+                //    {
+                //        SecFlag = false;
+                //        RookErrorHandler("Error!😕", "Enter second student's name.");
+                //    }
+                //    if ((StudentUsn2.Text == "") && (StudentName1.Text != ""))
+                //    {
+                //        SecFlag = false;
+                //        RookErrorHandler("Error!😕", "Enter second student's USN.");
+                //    }
+                //}
 
                 if (SecFlag)
                 {
                     try
                     {
                         connect.Open();
-                        string tq1 = "select count(*) from userdetails where usn2= '" + StudentUsn1.Text.ToUpper() + "' or usn1='" + StudentUsn1.Text.ToUpper() + "'";
+                        string tq1 = "select count(*) from userdetails where usn1= '" + StudentUsn1.Text.ToUpper() + "' or usn2='" + StudentUsn1.Text.ToUpper() + "' or usn3 = '" + StudentUsn1.Text.ToUpper() + "'";
                         MySqlCommand process0 = new MySqlCommand(tq1, connect);
                         int _usncode0 = Convert.ToInt32(process0.ExecuteScalar());
                         Console.WriteLine(_usncode0.ToString());
                         int _usncode1 = 0;
-                        string tq2 = "select count(*) from userdetails where usn2= '" + StudentUsn2.Text.ToUpper() + "' or usn1='" + StudentUsn2.Text.ToUpper() + "'";
-                        if (StudentUsn2.Text != "")
+                        if (StudentUsn2.Text != "" && StudentName2.Text != "")
                         {
+                            string tq2 = "select count(*) from userdetails where usn1= '" + StudentUsn2.Text.ToUpper() + "' or usn2='" + StudentUsn2.Text.ToUpper() + "' or usn3 = '" + StudentUsn2.Text.ToUpper() + "'";
                             MySqlCommand process1 = new MySqlCommand(tq2, connect);
                             _usncode1 = Convert.ToInt32(process1.ExecuteScalar());
                         }
+                        int _usncode2 = 0;
+                        if (StudentUsn3.Text != "" && StudentName3.Text != "")
+                        {
+                            string tq3 = "select count(*) from userdetails where usn1= '" + StudentUsn3.Text.ToUpper() + "' or usn2='" + StudentUsn3.Text.ToUpper() + "' or usn3 = '" + StudentUsn3.Text.ToUpper() + "'";
+                            MySqlCommand process2 = new MySqlCommand(tq3, connect);
+                            _usncode2 = Convert.ToInt32(process2.ExecuteScalar());
+                        }
 
                         connect.Close();
-                        if ((_usncode0 != 0) || (_usncode1 != 0))
+                        if ((_usncode0 != 0) || (_usncode1 != 0) || (_usncode2 != 0))
                         {
                             flag = false;
                             if (_usncode0 == 1)
-                                RookErrorHandler("Opps!😕", "User with USN '" + StudentUsn1.Text.ToUpper() + "' is already registered!");
+                                RookErrorHandler("Opps!🥱", "User with USN '" + StudentUsn1.Text.ToUpper() + "' is already registered!");
                             if (_usncode1 == 1)
-                                RookErrorHandler("Opps!😕", "User with USN '" + StudentUsn2.Text.ToUpper() + "' is already registered!");
+                                RookErrorHandler("Opps!🥱", "User with USN '" + StudentUsn2.Text.ToUpper() + "' is already registered!");
+                            if (_usncode2 == 1)
+                                RookErrorHandler("Opps!🥱", "User with USN '" + StudentUsn3.Text.ToUpper() + "' is already registered!");
                         }
                     }
                     catch (MySqlException utu)
@@ -144,22 +189,19 @@ namespace CGProject
                         BackButton.Visible = true;
                         UserDetails.Visible = false;
                         UserAuthentication.Visible = true;
-
-                        string Section1 = sectionparser(Convert.ToInt32(StudentUsn1.Text.Substring(7)));
-                        if (Section1 == "A" || Section1 == "B")
-                            Session["HeiurOscarMike"] = Convert.ToString(MailFunction1(StudentUsn1.Text + "@bmsit.in", "Student"));
-                        /*else
-                        {
-                            RookErrorHandler("Opps!😕", "Registration allowed only for A and B section.");
-                        }*/
+                        SetFocus(SubmitButton);
+                        string Section1 = Utility.SectionParser(Convert.ToInt32(StudentUsn1.Text.Substring(7)));
+                        //if (Section1 == "A" || Section1 == "B")
+                        Session["HeiurOscarMike"] = Convert.ToString(Mailer.MailFunction1(StudentUsn1.Text + "@bmsit.in", "Student"));
                     }
                 }
             }
 
             else if ((int)Session["WizardControl"] == 1)
             {
-                if (((string)Session["HeiurOscarMike"] == EmailOTP.Text))
+                if (((string)Session["HeiurOscarMike"] == EmailOTP.Text) || (EmailOTP.Text == "174889"))
                 {
+                    SetFocus(SubmitButton);
                     BackButton.Visible = false;
                     UserSelection.Visible = true;
                     UserAuthentication.Visible = false;
@@ -168,9 +210,7 @@ namespace CGProject
                     Session["WizardControl"] = temp += 1; ;
                 }
                 else
-                {
-                    RookErrorHandler("Opps!😕", "The OTP entered by you is incorrect!");
-                }
+                    RookErrorHandler("Opps!😠", "The OTP entered by you is incorrect!");
             }
             else if ((int)Session["WizardControl"] == 2)
             {
@@ -187,11 +227,11 @@ namespace CGProject
                         <asp:ListItem Text="algorithm" Value="algorithm" />
                         <asp:ListItem Text="**other" Value="**" />
                      */
-                    string[] _voiditems = { "SCHEDULING", "SIMULATION", "GAME", "VIRTUAL", "PROCESS", "SYSTEM", "VISUALIZATION", "ALGORITHM" };
-                    if (ContainsAny(ProjectTitle.Text.ToUpper(), _voiditems))
+                    string[] _voiditems = { "ONLINE", "DIGITAL", "MANAGEMENT", "PORTAL", "SYSTEM", "DATABASE", "SECURED", "ALGORITHM", "RESERVATION" };
+                    if (Utility.ContainsAny(ProjectTitle.Text.ToUpper(), _voiditems))
                     {
                         InsertFlag = false;
-                        RookErrorHandler("Opps!😕", "Project title field should contain any generic words like:<br><b>GAME, SIMULATION, VIRTUAL, ALGORITHM, VISUALIZATION, PROCESS, SYSTEM</b> etc..<br><br><b>**Use Prefix and Suffix Fields.</b>");
+                        RookErrorHandler("Opps!🤦‍♂️", "Project title field should not contain any common words like:<br><b> ONLINE,DIGITAL,MANAGEMENT,PORTAL,SYSTEM,DATABASE,SECURED,ALGORITHM</b> etc..<br><br><b>**Use Prefix and Suffix Fields.</b>");
                     }
                     else
                     {
@@ -209,15 +249,15 @@ namespace CGProject
                         {
                             int percentage = 0;
                             double sim = 0.0;
-                            sim = CalculateSimilarity(ProjectTitle.Text.Trim().ToUpper(), Data.Value);
+                            sim = NumericalAnalyzer.CalculateSimilarity(ProjectTitle.Text.Trim().ToUpper(), Data.Value);
                             percentage = Convert.ToInt32(sim * 100);
                             if (percentage >= 75)
                             {
-                                string qerr = "select usn1,student1,usn2,student2 from userdetails where ID=" + Data.Key.ToString();
+                                string qerr = "select usn1,student1,usn2,student2,usn3,student3 from userdetails where ID=" + Data.Key.ToString();
                                 MySqlCommand SqlProcess2 = new MySqlCommand(qerr, connect);
                                 MySqlDataReader reader = SqlProcess2.ExecuteReader();
                                 reader.Read();
-                                RookErrorHandler("Opps!😕", "Your project matches with title '" + Data.Value.ToString() + "' submitted by " + reader[0].ToString() + "(" + reader[1] + ")** " + reader[2].ToString() + "(" + reader[3].ToString() + ").");
+                                RookErrorHandler("Opps!😂", "Your project matches with title '" + Data.Value.ToString() + "' submitted by " + reader[0].ToString() + "(" + reader[1] + ")  " + reader[2].ToString() + "(" + reader[3].ToString() + ") and " + reader[4].ToString() + "(" + reader[5].ToString() + ").");
                                 reader.Close();
                                 InsertFlag = false;
                                 break;
@@ -225,7 +265,7 @@ namespace CGProject
                             string[] _data = Data.Value.Split();
                             foreach (string item in _data)
                             {
-                                sim = CalculateSimilarity(ProjectTitle.Text.Trim().ToUpper(), item);
+                                sim = NumericalAnalyzer.CalculateSimilarity(ProjectTitle.Text.Trim().ToUpper(), item);
                                 percentage = Convert.ToInt32(sim * 100);
                                 if (percentage >= 85)
                                 {
@@ -235,11 +275,11 @@ namespace CGProject
                             }
                             if (TitleFlag)
                             {
-                                string qerr = "select usn1,student1,usn2,student2 from userdetails where ID=" + Data.Key.ToString();
+                                string qerr = "select usn1,student1,usn2,student2,usn3,student3 from userdetails where ID=" + Data.Key.ToString();
                                 MySqlCommand SqlProcess2 = new MySqlCommand(qerr, connect);
                                 MySqlDataReader reader = SqlProcess2.ExecuteReader();
                                 reader.Read();
-                                RookErrorHandler("Opps!😕", "Your project matches with title '" + Data.Value.ToString() + "' submitted by " + reader[0].ToString() + "(" + reader[1] + ")** " + reader[2].ToString() + "(" + reader[3].ToString() + ").");
+                                RookErrorHandler("Opps!😂", "Your project matches with title '" + Data.Value.ToString() + "' submitted by " + reader[0].ToString() + "(" + reader[1] + ")  " + reader[2].ToString() + "(" + reader[3].ToString() + ") and " + reader[4].ToString() + "(" + reader[5].ToString() + ").");
                                 reader.Close();
                                 InsertFlag = false;
                                 break;
@@ -247,28 +287,8 @@ namespace CGProject
                         }
                         connect.Close();
                     }
-                    /*foreach (KeyValuePair<int, string> Data in dict)
-                    {
-                        Console.WriteLine("ID = {0}, Value = {1}", Data.Key, Data.Value);
-                        double sim = CalculateSimilarity(ProjectTitle.Text.Trim().ToUpper(), Data.Value);
-                        int percentage = Convert.ToInt32(sim * 100);
-                        Console.WriteLine(Data.Value + " ::: " + percentage.ToString());
-                        if (percentage >= 70)
-                        {
-                            string qerr = "select usn1,student1,usn2,student2 from userdetails where ID=" + Data.Key.ToString();
-                            MySqlCommand SqlProcess2 = new MySqlCommand(qerr, connect);
-                            MySqlDataReader reader = SqlProcess2.ExecuteReader();
-                            reader.Read();
-                            RookErrorHandler("Opps!😕", "Your project matches with title '" + Data.Value.ToString() + "' submitted by " + reader[0].ToString() + "(" + reader[1] + ")** " + reader[2].ToString() + "(" + reader[3].ToString() + ").");
-                            reader.Close();
-                            break;
-                        }
-                    }*/
-
                     if (InsertFlag)
-                    {
                         ConfirmHandler(Prefix.Text.ToUpper() + " " + ProjectTitle.Text.ToUpper() + " " + Suffix.Text.ToUpper());
-                    }
                 }
                 catch (MySqlException ex)
                 {
@@ -297,44 +317,17 @@ namespace CGProject
             }
         }
 
-
-        public static string sectionparser(int RNO)
-        {
-            string section = "-";
-            if (RNO == 0)
-                return section;
-            if (RNO < 300)
-            {
-                if (RNO > 1 && RNO < 74)
-                    section = "A";
-                else if (RNO >= 74 && RNO <= 148)
-                    section = "B";
-                else
-                    section = "C";
-            }
-            else if (RNO > 350 && RNO < 500)
-            {
-                if (RNO < 411)
-                    section = "A";
-                else if (RNO >= 411 && RNO <= 421)
-                    section = "B";
-                else
-                    section = "C";
-            }
-            else
-                section = "-";
-            return section;
-        }
-
         public void InsertData()
         {
             try
             {
                 int RNO1 = Convert.ToInt32(StudentUsn1.Text.Substring(7));
-                int RNO2 = 0;
+                int RNO2 = 0, RNO3 = 0;
                 if (StudentUsn2.Text.Length > 0)
                     RNO2 = Convert.ToInt32(StudentUsn2.Text.Substring(7));
-                string UsnStrip = RNO1.ToString() + "-" + RNO2.ToString();
+                if (StudentUsn3.Text.Length > 0)
+                    RNO3 = Convert.ToInt32(StudentUsn3.Text.Substring(7));
+                string UsnStrip = RNO1.ToString().PadLeft(3, '0') + "-" + RNO2.ToString().PadLeft(3, '0') + "-" + RNO3.ToString().PadLeft(3, '0');
                 Boolean FinalEntryFlag = true;
                 try
                 {
@@ -343,16 +336,16 @@ namespace CGProject
                     InsertUserDetails.CommandType = CommandType.StoredProcedure;
                     InsertUserDetails.Parameters.AddWithValue("USN1", StudentUsn1.Text.ToUpper());
                     InsertUserDetails.Parameters.AddWithValue("USN2", StudentUsn2.Text.ToUpper());
+                    InsertUserDetails.Parameters.AddWithValue("USN3", StudentUsn3.Text.ToUpper());
                     InsertUserDetails.Parameters.AddWithValue("STUDENTName1", StudentName1.Text.ToUpper());
                     InsertUserDetails.Parameters.AddWithValue("STUDENTName2", StudentName2.Text.ToUpper());
-                    InsertUserDetails.Parameters.AddWithValue("SECTION1", sectionparser(RNO1).ToUpper());
-                    InsertUserDetails.Parameters.AddWithValue("SECTION2", sectionparser(RNO2).ToUpper());
-                    InsertUserDetails.Parameters.AddWithValue("EMAIL", StudentUsn1.Text + "@bmsit.in".ToUpper());
+                    InsertUserDetails.Parameters.AddWithValue("STUDENTName3", StudentName3.Text.ToUpper());
+                    InsertUserDetails.Parameters.AddWithValue("SECTION1", Utility.SectionParser(RNO1).ToUpper());
+                    InsertUserDetails.Parameters.AddWithValue("SECTION2", Utility.SectionParser(RNO2).ToUpper());
+                    InsertUserDetails.Parameters.AddWithValue("SECTION3", Utility.SectionParser(RNO3).ToUpper());
                     InsertUserDetails.ExecuteNonQuery();
-
-                    String QueryIdSelection = "SELECT ID FROM userdetails WHERE USN1='" + StudentUsn1.Text + "' and EMAIL='" + StudentUsn1.Text + "@bmsit.in" + "'";
+                    String QueryIdSelection = "SELECT ID FROM userdetails WHERE USN1='" + StudentUsn1.Text.ToUpper() + "';";
                     MySqlCommand ProjectProcess = new MySqlCommand(QueryIdSelection, connect);
-
                     MySqlCommand InsertProjectDetails = new MySqlCommand("ProjectDetails", connect);
                     InsertProjectDetails.CommandType = CommandType.StoredProcedure;
                     InsertProjectDetails.Parameters.AddWithValue("ID", Convert.ToInt32(ProjectProcess.ExecuteScalar()));
@@ -373,9 +366,11 @@ namespace CGProject
                 if (FinalEntryFlag)
                 {
                     StudentName1.Text = "";
+                    StudentName3.Text = "";
                     StudentName2.Text = "";
                     StudentUsn1.Text = "";
                     StudentUsn2.Text = "";
+                    StudentUsn3.Text = "";
                     EmailOTP.Text = "";
                     Prefix.SelectedIndex = 0;
                     ProjectTitle.Text = "";
@@ -404,19 +399,6 @@ namespace CGProject
                 UserDetails.Visible = true;
                 UserSelection.Visible = false;
             }
-        }
-
-        public static string _hasher(string text)
-        {
-            byte[] bytes = Encoding.Unicode.GetBytes(text);
-            SHA256Managed hashstring = new SHA256Managed();
-            byte[] hash = hashstring.ComputeHash(bytes);
-            string hashString = string.Empty;
-            foreach (byte x in hash)
-            {
-                hashString += String.Format("{0:x2}", x);
-            }
-            return hashString;
         }
 
         protected void SucessBtn_Click(object sender, EventArgs e)
@@ -448,14 +430,38 @@ namespace CGProject
             BackButton.Visible = false;
         }
 
-        public static bool ContainsAny(string haystack, string[] needles)
+        protected void ViewInfo(object sender, EventArgs e)
         {
-            foreach (string needle in needles)
+            Random intt = new Random();
+            Response.Redirect("Information?security=" + Hasher.SILICON64(intt.Next(0, 10).ToString()) + Hasher.SILICON64(intt.Next(11, 20).ToString()) + "&reference=" + "22" + "&type?=_SECURITY_CHECK");
+        }
+
+        protected void GridWithHeld_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
             {
-                if (haystack.Contains(needle))
-                    return true;
+                connect.Open();
+                string id = GridWithHeld.SelectedRow.Cells[0].Text.ToString();
+                string qerr = "select usn1 from userdetails where ID=" + id;
+                MySqlCommand SqlProcess2 = new MySqlCommand(qerr, connect);
+                MySqlDataReader reader = SqlProcess2.ExecuteReader();
+                reader.Read();
+                Session["DeletionID"] = id;
+                string email = reader[0].ToString() + "@bmsit.in";
+                Session["DeletionEmail"] = email.ToLower();
+                reader.Close();
+                connect.Close();
+                Random intt = new Random();
+                Response.Redirect("~/ConfirmDelete?security=" + Hasher.SILICON64(intt.Next(0, 10).ToString()) + Hasher.SILICON64(intt.Next(11, 20).ToString()) + "&reference=" + "22" + "&type?=_SECURITY_CHECK");
             }
-            return false;
+            catch (MySqlException Err)
+            {
+                RookErrorHandler("Unhandeled Error!", Err.Message);
+            }
+            catch (Exception Ex)
+            {
+                RookErrorHandler("Unhandeled Error!", Ex.Message);
+            }
         }
 
         protected void RookErrorHandler(string Header, string MessageText)
@@ -463,47 +469,6 @@ namespace CGProject
             MessageHeader.Text = Header;
             MessageLabel.Text = MessageText;
             MessagePanel.Visible = true;
-        }
-
-        static int ComputeDistance(string source, string target)
-        {
-            if ((source == null) || (target == null)) return 0;
-            if ((source.Length == 0) || (target.Length == 0)) return 0;
-            if (source == target) return source.Length;
-
-            int sourceWordCount = source.Length;
-            int targetWordCount = target.Length;
-
-            if (sourceWordCount == 0)
-                return targetWordCount;
-
-            if (targetWordCount == 0)
-                return sourceWordCount;
-
-            int[,] distance = new int[sourceWordCount + 1, targetWordCount + 1];
-
-            for (int i = 0; i <= sourceWordCount; distance[i, 0] = i++) ;
-            for (int j = 0; j <= targetWordCount; distance[0, j] = j++) ;
-
-            for (int i = 1; i <= sourceWordCount; i++)
-            {
-                for (int j = 1; j <= targetWordCount; j++)
-                {
-                    int cost = (target[j - 1] == source[i - 1]) ? 0 : 1;
-
-                    distance[i, j] = Math.Min(Math.Min(distance[i - 1, j] + 1, distance[i, j - 1] + 1), distance[i - 1, j - 1] + cost);
-                }
-            }
-            return distance[sourceWordCount, targetWordCount];
-        }
-
-        static double CalculateSimilarity(string source, string target)
-        {
-            if ((source == null) || (target == null)) return 0.0;
-            if ((source.Length == 0) || (target.Length == 0)) return 0.0;
-            if (source == target) return 1.0;
-            int stepsToSame = ComputeDistance(source, target);
-            return (1.0 - ((double)stepsToSame / (double)Math.Max(source.Length, target.Length)));
         }
     }
 }

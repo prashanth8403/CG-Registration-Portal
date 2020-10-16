@@ -59,3 +59,4 @@ C:\Users\PRASHANTH KUMAR\source\repos\BMSITNEW\CGProject\CGProject\obj\Release\C
 C:\Users\PRASHANTH KUMAR\source\repos\BMSITNEW\CGProject\CGProject\obj\Release\CGProject.dll
 C:\Users\PRASHANTH KUMAR\source\repos\BMSITNEW\CGProject\CGProject\obj\Release\CGProject.pdb
 C:\Users\PRASHANTH KUMAR\source\repos\BMSITNEW\CGProject\CGProject\obj\Release\CGProject.csprojAssemblyReference.cache
+C:\Users\PRASHANTH KUMAR\source\repos\BMSITNEW\CGProject\CGProject\obj\Release\CGProject.csproj.CoreCompileInputs.cache

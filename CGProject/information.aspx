@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#"  AutoEventWireup="true" CodeBehind="information.aspx.cs" Inherits="CGProject.information" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="information.aspx.cs" Inherits="CGProject.information" %>
 
 <!DOCTYPE html>
 
@@ -13,113 +13,6 @@
 </head>
 <body>
     <form id="InformationForm" runat="server">
-        <style>
-            .modal-load {
-                position: fixed;
-                z-index: 1;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                overflow: auto;
-                background-color: rgba(225,225,225,0.6);
-            }
-
-            .modal-content {
-                margin-top: 200px;
-                width: 400px;
-                max-width: 80%;
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .modal-load-content {
-                margin: auto;
-                padding: 0;
-                background-size: 50px;
-                background-repeat: no-repeat;
-                position: center;
-                -webkit-animation-name: animatetop;
-                -webkit-animation-duration: 0.4s;
-                animation-name: animatetop;
-                animation-duration: 0.4s
-            }
-
-            @-webkit-keyframes animatetop {
-                from {
-                    top: -300px;
-                    opacity: 0
-                }
-
-                to {
-                    top: 0;
-                    opacity: 1
-                }
-            }
-
-            @keyframes animatetop {
-                from {
-                    top: -300px;
-                    opacity: 0
-                }
-
-                to {
-                    top: 0;
-                    opacity: 1
-                }
-            }
-
-            .btn-message {
-                padding: 5px 5px 5px 5px;
-                width: 65px;
-                color: #363491;
-                font-weight: 600;
-                font-size: 16px;
-                float: right;
-                margin-left: auto;
-                margin-right: 20px;
-                border-radius: 4px;
-                margin-bottom: 15px;
-                border: 1px solid #363491;
-                cursor: pointer;
-                background-color: #fff;
-            }
-
-                .btn-message:hover {
-                    background: #363491;
-                    color: #fff;
-                }
-
-            .close {
-                color: #343434;
-                float: right;
-                font-size: 28px;
-                font-weight: bold;
-            }
-
-                .close:hover,
-                .close:focus {
-                    color: #000;
-                    text-decoration: none;
-                    cursor: pointer;
-                }
-
-            .modal-load-header {
-                padding: 2px 16px;
-                background-color: #5cb85c;
-                color: white;
-            }
-
-            .modal-load-body {
-                padding: 2px 16px;
-            }
-
-            .modal-load-footer {
-                padding: 2px 16px;
-                background-color: #5cb85c;
-                color: white;
-            }
-        </style>
         <div class="top-silicon" style="background-color: #fff; width: 100%; margin-top: -15px;">
             <nav class="navbar navbar-transparent navbar-color-on-scroll navbar-expand-lg" style="background-color: #363491;">
                 <div class="container" style="background-color: #fff; padding-top: -15px;">
@@ -153,17 +46,17 @@
                                             <asp:Label runat="server" ID="lblRowNumber" Text='<%# Container.DataItemIndex + 1 %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                   <asp:TemplateField HeaderText="Project Title" >
+                                    <asp:TemplateField HeaderText="Project Title">
                                         <ItemTemplate>
                                             <%# Eval("Prefix") + " " + Eval("Title") + " " + Eval("Suffix")%>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:BoundField DataField="usn1" HeaderText="USN" />
                                     <asp:BoundField DataField="student1" HeaderText="Student" />
                                     <asp:BoundField DataField="section1" HeaderText="SEC" />
-                                    <asp:BoundField DataField="usn2" HeaderText="USN" />
                                     <asp:BoundField DataField="student2" HeaderText="Student" />
                                     <asp:BoundField DataField="section2" HeaderText="SEC" />
+                                    <asp:BoundField DataField="student3" HeaderText="Student" />
+                                    <asp:BoundField DataField="section3" HeaderText="SEC" />
                                 </Columns>
                             </asp:GridView>
                             <div class="provider-footer" style="text-align: center; font-weight: 600;">

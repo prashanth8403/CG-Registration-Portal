@@ -19,6 +19,7 @@ namespace CGProject
         static void RegisterRoutes(RouteCollection routes)
         {
             routes.MapPageRoute("Home", "Home", "~/Default.aspx");
+            routes.MapPageRoute("ConfirmDelete", "ConfirmDelete", "~/ConfirmDelete.aspx");
             routes.MapPageRoute("Information", "Information", "~/information.aspx");
         }
 
